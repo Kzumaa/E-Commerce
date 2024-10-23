@@ -52,7 +52,7 @@ class BrandResource extends Resource
                         ]),
                     Forms\Components\FileUpload::make('image')
                         ->image()
-                        ->directory('brandes'),
+                        ->directory('brands'),
 
                     Forms\Components\Toggle::make('is_active')
                         ->required()
