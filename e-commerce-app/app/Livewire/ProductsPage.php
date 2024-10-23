@@ -21,40 +21,49 @@ class ProductsPage extends Component
 
 
     #[Url]
-    public $selected_categories = [];
+    public $selectedCategories = [];
 
     #[Url]
-    public $selected_brands = [];
+    public $selectedBrands = [];
     #[Url]
     public $featured;
     #[Url]
-    public $on_sale;
+    public $onSale;
 
     #[Url]
-    public $price_range = 0;
+    public $priceRange = 0;
+
+    #[Url]
+    public $sort = 'latest';
 
 
     public function render(): Application|Factory|View|\Illuminate\View\View
     {
         $products = Product::query()->where('is_active', '=', 1);
 
-        if (!empty($this->selected_categories)) {
-            $products->whereIn('category_id', $this->selected_categories);
+        if (!empty($this->selectedCategories)) {
+            $products->whereIn('category_id', $this->selectedCategories);
         }
 
         if (!empty($this->selected_brands)) {
-            $products->whereIn('brand_id', $this->selected_brands);
+            $products->whereIn('brand_id', $this->selectedBrands);
         }
 
         if (!empty($this->featured)) {
             $products->where('is_featured', '=', 1);
         }
-        if (!empty($this->on_sale)) {
+        if (!empty($this->onSale)) {
             $products->where('on_sale', '=', 1);
         }
 
-        if ($this->price_range) {
-            $products->whereBetween('price', [0, $this->price_range]);
+        if ($this->priceRange) {
+            $products->whereBetween('price', [0, $this->priceRange]);
+        }
+
+        if ($this->sort === 'latest') {
+            $products->orderBy('created_at', 'desc');
+        } elseif ($this->sort === 'oldest') {
+            $products->orderBy('price', 'asc');
         }
 
         return view('livewire.products-page', [
