@@ -9,6 +9,11 @@ class CartManagement
 {
     public static function addItemToCart($productId): int
     {
+       return self::addItemsToCart($productId, 1);
+    }
+
+    public static function addItemsToCart(int $productId,int $quantity): int
+    {
         $cartItems = self::getCartItemsFromCookie();
 
         $existingItem = null;
@@ -21,8 +26,8 @@ class CartManagement
         }
 
         if ($existingItem !== null) {
-            $cartItems[$existingItem]['quantity'] += 1;
-            $cartItems[$existingItem]['totalAmount'] = $cartItems[$existingItem]['quantity'] * $cartItems[$existingItem]['unitAmount'];
+            $cartItems[$existingItem]['quantity'] += $quantity;
+            $cartItems[$existingItem]['totalAmount'] = $cartItems[$existingItem]['quantity'] * $cartItems[$existingItem]['price'];
         } else {
             $product = Product::query()->where('id', $productId)->first(['id', 'name', 'price', 'images']);
             if ($product) {
@@ -31,7 +36,7 @@ class CartManagement
                     'name' => $product->name,
                     'price' => $product->price,
                     'image' => $product->images[0],
-                    'quantity' => 1,
+                    'quantity' => $quantity,
                     'totalAmount' => $product->price,
                 ];
             }
