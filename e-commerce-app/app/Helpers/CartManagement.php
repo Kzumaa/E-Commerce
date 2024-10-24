@@ -37,7 +37,7 @@ class CartManagement
                     'price' => $product->price,
                     'image' => $product->images[0],
                     'quantity' => $quantity,
-                    'totalAmount' => $product->price,
+                    'totalAmount' => $product->price * $quantity,
                 ];
             }
         }
@@ -88,7 +88,7 @@ class CartManagement
         foreach ($cartItems as $key => $item) {
             if ($item['productId'] === $productId) {
                 $cartItems[$key]['quantity'] += 1;
-                $cartItems[$key]['totalAmount'] = $cartItems[$key]['quantity'] * $cartItems[$key]['unitAmount'];
+                $cartItems[$key]['totalAmount'] = $cartItems[$key]['quantity'] * $cartItems[$key]['price'];
             }
         }
 
@@ -105,7 +105,7 @@ class CartManagement
             if ($item['productId'] === $productId) {
                 if ($item['quantity'] > 1) {
                     $cartItems[$key]['quantity'] -= 1;
-                    $cartItems[$key]['totalAmount'] = $cartItems[$key]['quantity'] * $cartItems[$key]['unitAmount'];
+                    $cartItems[$key]['totalAmount'] = $cartItems[$key]['quantity'] * $cartItems[$key]['price'];
                 } else {
                     self::removeCartItem($productId);
                 }
