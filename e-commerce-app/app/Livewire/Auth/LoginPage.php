@@ -19,10 +19,10 @@ class LoginPage extends Component
         ]);
 
         if (!auth()->attempt(["email" => $this->email, "password" => $this->password])) {
-            $this->addError('email', 'Invalid credentials');
+            $this->addError('email', ' ');
             $this->addError("password", " ");
 
-//            session()->flash('error', 'Invalid credentials');
+            session()->flash('error', 'Invalid credentials');
             return ;
         }
 
