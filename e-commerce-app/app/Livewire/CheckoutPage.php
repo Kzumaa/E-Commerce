@@ -83,6 +83,7 @@ class CheckoutPage extends Component
         $order->user_id = auth()->id();
         $order->total_price = CartManagement::calculateTotalPrice($cartItems);
         $order->payment_method  = $this->paymentMethod;
+        $order->payment_status = 'pending';
         $order->status = 'new';
         $order->currency = 'USD';
         $order->shipping_method = 'none';
