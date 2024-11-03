@@ -17,7 +17,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 
-#[Title('Products - KZTech')]
+#[Title('Products')]
 class ProductsPage extends Component
 {
     use WithPagination;

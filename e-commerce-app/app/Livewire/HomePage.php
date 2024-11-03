@@ -10,7 +10,7 @@ use Illuminate\Foundation\Application;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title("Home Page - KZTech")]
+#[Title("Home Page")]
 
 
 class HomePage extends Component

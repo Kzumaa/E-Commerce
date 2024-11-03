@@ -9,7 +9,7 @@ use Illuminate\Foundation\Application;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title("Categories - KZTech")]
+#[Title("Categories")]
 
 class CategoriesPage extends Component
 {
