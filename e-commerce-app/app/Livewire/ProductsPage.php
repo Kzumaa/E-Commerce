@@ -56,12 +56,13 @@ class ProductsPage extends Component
     public function render(): Application|Factory|View|\Illuminate\View\View
     {
         $products = Product::query()->where('is_active', '=', 1);
+//        dd($products->get());
 
         if (!empty($this->selectedCategories)) {
             $products->whereIn('category_id', $this->selectedCategories);
         }
 
-        if (!empty($this->selected_brands)) {
+        if (!empty($this->selectedBrands)) {
             $products->whereIn('brand_id', $this->selectedBrands);
         }
 
