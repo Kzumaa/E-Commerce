@@ -43,24 +43,24 @@
                                         </div>
                                     </div>
                                     <div class="mt-4">
-                                        <label wire:model="phone" class="block text-gray-700 dark:text-white mb-1" for="phone">
+                                        <label  class="block text-gray-700 dark:text-white mb-1" for="phone">
                                             Phone
                                         </label>
-                                        <input class="w-full rounded-lg border py-2 px-3
+                                        <input wire:model="phone" class="w-full rounded-lg border py-2 px-3
                                         @error('phone')
                                             border-red-500
                                             @enderror
 
-                                        dark:bg-gray-700 dark:text-white dark:border-none" id="phone" type="text">
+                                        dark:bg-gray-700 dark:text-white dark:border-none" id="phone" type="number">
                                         @error('phone')
                                         <div class="text-red-500 text-sm">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mt-4">
-                                        <label wire:model="address" class="block text-gray-700 dark:text-white mb-1" for="address">
+                                        <label  class="block text-gray-700 dark:text-white mb-1" for="address">
                                             Address
                                         </label>
-                                        <input class="w-full rounded-lg border py-2 px-3
+                                        <input wire:model="address" class="w-full rounded-lg border py-2 px-3
                                          @error('address')
                                             border-red-500
                                          @enderror
@@ -71,10 +71,10 @@
                                         @enderror
                                     </div>
                                     <div class="mt-4">
-                                        <label wire:model="city" class="block text-gray-700 dark:text-white mb-1" for="city">
+                                        <label  class="block text-gray-700 dark:text-white mb-1" for="city">
                                             City
                                         </label>
-                                        <input class="w-full rounded-lg border py-2 px-3
+                                        <input wire:model="city" class="w-full rounded-lg border py-2 px-3
                                         @error('city')
                                             border-red-500
                                             @enderror
@@ -189,7 +189,8 @@
                         </hr>
                     </div>
                     <button type="submit" onFor class="bg-green-500 mt-4 w-full p-3 rounded-lg text-lg text-white hover:bg-green-600">
-                        Place Order
+                        <span wire:loading.remove>Place Order</span>
+                        <span wire:loading >Processing... </span>
                     </button>
                     <div class="bg-white mt-4 rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
                         <div class="text-xl font-bold underline text-gray-700 dark:text-white mb-2">
