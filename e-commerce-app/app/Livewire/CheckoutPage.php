@@ -6,6 +6,7 @@ use App\Helpers\CartManagement;
 use App\Mail\OrderPlaced;
 use App\Models\Address;
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -116,15 +117,24 @@ class CheckoutPage extends Component
             $redirectUrl = route('checkout.success');
         }
 
-        $order->save();
-        $address->order_id = $order->id;
-        $address->save();
+        try {
+            DB::beginTransaction();
+            $order->save();
+            $address->order_id = $order->id;
+            $address->save();
+            $order->items()->createMany($cart);
+            DB::commit();
+
+            CartManagement::clearCart();
+            Mail::to(request()->user())->send(new OrderPlaced($order));
+            return redirect($redirectUrl);
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return redirect($redirectUrl);
+        }
 
 
-        $order->items()->createMany($cart);
-        CartManagement::clearCart();
-        Mail::to(request()->user())->send(new OrderPlaced($order));
-        return redirect($redirectUrl);
     }
 
     public function render()

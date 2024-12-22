@@ -11,6 +11,7 @@ use Filament\Pages\Page;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -42,6 +43,10 @@ class UserResource extends Resource
                     ->maxLength(255)
                     ->unique(ignoreRecord: true)
                     ->required(),
+                Forms\Components\Select::make('role')
+                    ->options(['user' => 'User', 'admin' => 'Admin'])
+                    ->required()
+                    ->label('Role'),
                 Forms\Components\DatePicker::make('email_verified_at')
                     ->label('Email Verified At')
                     ->default(now()),
@@ -60,6 +65,8 @@ class UserResource extends Resource
                     ->searchable(),
                 TextColumn::make('email')
                     ->searchable(),
+                TextColumn::make('role')
+                    ->sortable(),
                 TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable(),
